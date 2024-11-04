@@ -1,1 +1,2 @@
 # leetcode
+Para fortalecer minha lógica e habilidades de resolução de problemas, faço de 4 a 6 exercícios práticos diariamente no LeetCode. Essa prática tem sido fundamental para consolidar minha base em algoritmos e estrutura de dados.
