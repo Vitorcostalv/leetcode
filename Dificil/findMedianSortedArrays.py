@@ -1,41 +1,30 @@
-class Solution:
+class Solution(object):
     def findMedianSortedArrays(self, nums1, nums2):
- 
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
         if len(nums1) > len(nums2):
             nums1, nums2 = nums2, nums1
-
+        
         m, n = len(nums1), len(nums2)
         left, right = 0, m
-        half_len = (m + n + 1) // 2
-
+        
         while left <= right:
-            i = (left + right) // 2
-            j = half_len - i
-
-          
-            if i < m and nums2[j - 1] > nums1[i]:
-                
-                left = i + 1
-            elif i > 0 and nums1[i - 1] > nums2[j]:
-               
-                right = i - 1
-            else:
+            partition1 = (left + right) // 2
+            partition2 = (m + n + 1) // 2 - partition1
             
-                if i == 0:
-                    max_of_left = nums2[j - 1]
-                elif j == 0:
-                    max_of_left = nums1[i - 1]
-                else:
-                    max_of_left = max(nums1[i - 1], nums2[j - 1])
-
+            maxLeft1 = float('-inf') if partition1 == 0 else nums1[partition1 - 1]
+            minRight1 = float('inf') if partition1 == m else nums1[partition1]
+            maxLeft2 = float('-inf') if partition2 == 0 else nums2[partition2 - 1]
+            minRight2 = float('inf') if partition2 == n else nums2[partition2]
+            
+            if maxLeft1 <= minRight2 and maxLeft2 <= minRight1:
                 if (m + n) % 2 == 1:
-                    return max_of_left  
-
-                if i == m:
-                    min_of_right = nums2[j]
-                elif j == n:
-                    min_of_right = nums1[i]
-                else:
-                    min_of_right = min(nums1[i], nums2[j])
-
-                return (max_of_left + min_of_right)
+                    return max(maxLeft1, maxLeft2)
+                return (max(maxLeft1, maxLeft2) + min(minRight1, minRight2)) / 2.0
+            elif maxLeft1 > minRight2:
+                right = partition1 - 1
+            else:
+                left = partition1 + 1
