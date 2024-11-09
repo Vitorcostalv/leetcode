@@ -6,7 +6,8 @@ class Solution(object):
         :type queries: List[List[int]]
         :rtype: List[int]
         """
-        max_n = 10000
+        # Increased precompute range
+        max_n = 20000  # Ensure it covers the maximum possible nCr range
         
         fact = [1] * (max_n + 1)
         for i in range(2, max_n + 1):
@@ -18,10 +19,11 @@ class Solution(object):
             inv_fact[i] = inv_fact[i + 1] * (i + 1) % MOD
         
         def nCr(n, r):
-            if n < r:
+            if n < r or n < 0 or r < 0:
                 return 0
             return fact[n] * inv_fact[r] % MOD * inv_fact[n - r] % MOD
         
+        # Prime factorization
         def prime_factorization(n):
             factors = {}
             d = 2
